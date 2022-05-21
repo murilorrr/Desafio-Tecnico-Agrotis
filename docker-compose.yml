@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      # Define o nome do banco de dados
+      MYSQL_DATABASE: 'agrotis'
+      MYSQL_ROOT_USERNAME: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      # Expondo a port padrão do MySQL
+      - 3306:3306
+    volumes:
+      # Define um volume interno do Docker para persistir os dados
+      - my-db:/var/lib/mysql
+
+volumes:
+  # Cria o volume interno do Docker
+  my-db:
