@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -21,10 +22,14 @@ public class User {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
+  @NotBlank(message = "Name is mandatory")
   private String name;
 
+  // @NotEmpty(message = "initialDate is mandatory")
   private LocalDate initialDate;
-  private LocalDate EndDate;
+
+  // @NotBlank(message = "endDate is mandatory")
+  private LocalDate endDate;
 
   private String comments;
 
@@ -83,14 +88,14 @@ public class User {
    * @return LocalDateTime return the EndDate
    */
   public LocalDate getEndDate() {
-    return EndDate;
+    return endDate;
   }
 
   /**
    * @param EndDate the EndDate to set
    */
-  public void setEndDate(LocalDate EndDate) {
-    this.EndDate = EndDate;
+  public void setEndDate(LocalDate endDate) {
+    this.endDate = endDate;
   }
 
   /**
