@@ -1,6 +1,6 @@
 package com.agrotis.agrotis.Entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,8 +21,8 @@ public class User {
 
   private String name;
 
-  private LocalDateTime initialDate;
-  private LocalDateTime EndDate;
+  private LocalDate initialDate;
+  private LocalDate EndDate;
 
   private String comments;
 
@@ -57,28 +57,28 @@ public class User {
   /**
    * @return LocalDateTime return the initialDate
    */
-  public LocalDateTime getInitialDate() {
+  public LocalDate getInitialDate() {
     return initialDate;
   }
 
   /**
    * @param initialDate the initialDate to set
    */
-  public void setInitialDate(LocalDateTime initialDate) {
+  public void setInitialDate(LocalDate initialDate) {
     this.initialDate = initialDate;
   }
 
   /**
    * @return LocalDateTime return the EndDate
    */
-  public LocalDateTime getEndDate() {
+  public LocalDate getEndDate() {
     return EndDate;
   }
 
   /**
    * @param EndDate the EndDate to set
    */
-  public void setEndDate(LocalDateTime EndDate) {
+  public void setEndDate(LocalDate EndDate) {
     this.EndDate = EndDate;
   }
 
