@@ -23,6 +23,8 @@ public class Propriedade {
 
   private String name;
 
+  private String CNPJ;
+
   @OneToMany(mappedBy = "propriedade", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<User> users;
 
@@ -55,5 +57,34 @@ public class Propriedade {
     this.name = name;
   }
   // getters and setters
+
+
+    /**
+     * @return String return the CNPJ
+     */
+    public String getCNPJ() {
+        return CNPJ;
+    }
+
+    /**
+     * @param CNPJ the CNPJ to set
+     */
+    public void setCNPJ(String CNPJ) {
+        this.CNPJ = CNPJ;
+    }
+
+    /**
+     * @return List<User> return the users
+     */
+    public List<User> getUsers() {
+        return users;
+    }
+
+    /**
+     * @param users the users to set
+     */
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
 }
