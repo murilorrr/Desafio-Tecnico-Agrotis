@@ -6,7 +6,9 @@ import com.agrotis.agrotis.Entities.Laboratorio;
 import com.agrotis.agrotis.Entities.Propriedade;
 import com.agrotis.agrotis.Entities.User;
 import com.agrotis.agrotis.Entities.UserRequest;
+import com.agrotis.agrotis.Exceptions.ErroChaveDate;
 import com.agrotis.agrotis.Exceptions.ErroChaveLaboratorio;
+import com.agrotis.agrotis.Exceptions.ErroChaveName;
 import com.agrotis.agrotis.Exceptions.ErroChavePropriedade;
 import com.agrotis.agrotis.Exceptions.ErroDeChave;
 import com.agrotis.agrotis.repositories.LaboratorioRepository;
@@ -47,8 +49,24 @@ public class UserController {
     Laboratorio lab;
     Propriedade prop;
 
+    if (u.getName() == null) {
+      throw new ErroChaveName();
+    }
+
+    if ((u.getInitialDate() == null) || (u.getEndDate() == null)) {
+      throw new ErroChaveDate();
+    }
+
     lab = laboratorioRepository.findOneByName(u.getLaboratorio());
+    if(lab == null) {
+      throw new ErroChaveLaboratorio();
+    }
+
     prop = propriedadeRepository.findOneByName(u.getPropriedade());
+    if(prop == null) {
+      throw new ErroChavePropriedade();
+    }
+    
     User user = new User();
     user.setName(u.getName());
     user.setInitialDate(u.getInitialDate());
@@ -57,12 +75,6 @@ public class UserController {
     user.setPropriedade(prop);
     user.setComments(u.getComments());
 
-    if(lab == null) {
-      throw new ErroChaveLaboratorio();
-    }
-    if(prop == null) {
-      throw new ErroChavePropriedade();
-    }
     return userRepository.save(user);
   }
 
