@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,15 @@ public class User {
 
   private String comments;
 
+  @ManyToOne
+  @JoinColumn(name = "laboratorio_id")
+  private Laboratorio laboratorio;
+
+  @ManyToOne
+  @JoinColumn(name = "propriedade_id")
+  private Propriedade propriedade;
+
+  // getters and setters
   /**
    * @return Long return the id
    */
@@ -95,5 +106,35 @@ public class User {
   public void setComments(String comments) {
     this.comments = comments;
   }
+
+
+    /**
+     * @return Laboratorio return the laboratorio
+     */
+    public Laboratorio getLaboratorio() {
+        return laboratorio;
+    }
+
+    /**
+     * @param laboratorio the laboratorio to set
+     */
+    public void setLaboratorio(Laboratorio laboratorio) {
+        this.laboratorio = laboratorio;
+    }
+
+    /**
+     * @return Propriedade return the propriedade
+     */
+    public Propriedade getPropriedade() {
+        return propriedade;
+    }
+
+    /**
+     * @param propriedade the propriedade to set
+     */
+    public void setPropriedade(Propriedade propriedade) {
+        this.propriedade = propriedade;
+    }
+    // getters and setters
 
 }

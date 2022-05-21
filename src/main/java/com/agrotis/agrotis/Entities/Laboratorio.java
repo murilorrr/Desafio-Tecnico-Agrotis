@@ -1,9 +1,13 @@
 package com.agrotis.agrotis.Entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -19,6 +23,10 @@ public class Laboratorio {
 
   private String name;
 
+  @OneToMany(mappedBy = "laboratorio", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<User> users;
+
+  // getters and setters
   /**
    * @return Long return the id
    */
@@ -46,5 +54,6 @@ public class Laboratorio {
   public void setName(String name) {
     this.name = name;
   }
+  // getters and setters
 
 }
