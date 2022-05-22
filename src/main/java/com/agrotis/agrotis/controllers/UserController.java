@@ -1,6 +1,7 @@
 package com.agrotis.agrotis.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import com.agrotis.agrotis.Entities.Laboratorio;
 import com.agrotis.agrotis.Entities.Propriedade;
@@ -35,8 +36,9 @@ public class UserController {
   PropriedadeRepository propriedadeRepository;
   
   @GetMapping("/users")
-  public List<User> getAll() {
-    return userRepository.findAll();
+  public Map<String,List<User>> getAll() {
+    List<User> users = userRepository.findAll();
+    return Map.of("users", users);
   }
 
   @GetMapping("/users/{id}")
