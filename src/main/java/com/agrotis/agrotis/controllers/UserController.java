@@ -2,6 +2,7 @@ package com.agrotis.agrotis.controllers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import com.agrotis.agrotis.Entities.Laboratorio;
 import com.agrotis.agrotis.Entities.Propriedade;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -61,13 +63,15 @@ public class UserController {
       throw new ErroChaveDate();
     }
 
-    lab = laboratorioRepository.findOneByName(u.getLaboratorio()).get();
-    if(lab == null) {
+    try {
+      lab = laboratorioRepository.findOneByName(u.getLaboratorio()).get();
+    } catch (NoSuchElementException e) {
       throw new ErroChaveLaboratorio();
     }
 
-    prop = propriedadeRepository.findOneByName(u.getPropriedade());
-    if(prop == null) {
+    try {
+      prop = propriedadeRepository.findOneByName(u.getPropriedade()).get();
+    } catch (NoSuchElementException e) {
       throw new ErroChavePropriedade();
     }
     
@@ -79,6 +83,35 @@ public class UserController {
     user.setPropriedade(prop);
     user.setComments(u.getComments());
 
+    return userRepository.save(user);
+  }
+
+  @PutMapping("/users/{id}")
+  public User updateUser(@PathVariable Long id,@RequestBody UserRequest u) throws ErroDeChave {
+    User user = userRepository.findById(id).get();
+
+    Laboratorio lab;
+    Propriedade prop;
+
+    try {
+      lab = laboratorioRepository.findOneByName(u.getLaboratorio()).get();
+    } catch (NoSuchElementException e) {
+      throw new ErroChaveLaboratorio();
+    }
+
+    try {
+      prop = propriedadeRepository.findOneByName(u.getPropriedade()).get();
+    } catch (NoSuchElementException e) {
+      throw new ErroChavePropriedade();
+    }
+
+    user.setLaboratorio(lab);
+    user.setPropriedade(prop);
+
+    user.setName(u.getName());
+    user.setInitialDate(u.getInitialDate());
+    user.setEndDate(u.getEndDate());
+    user.setComments(u.getComments());
     return userRepository.save(user);
   }
 
