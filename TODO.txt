@@ -1,1 +1,5 @@
-Update do User Request
+Service de user
+middlewares de mapeamento de erro para HTTP status codes
+autenticação e autorização com JWT
+login para recebimento de chave
+abstração dos controllers
