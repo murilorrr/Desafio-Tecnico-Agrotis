@@ -12,6 +12,7 @@ import com.agrotis.agrotis.Exceptions.ErroChaveLaboratorio;
 import com.agrotis.agrotis.Exceptions.ErroChaveName;
 import com.agrotis.agrotis.Exceptions.ErroChavePropriedade;
 import com.agrotis.agrotis.Exceptions.ErroDeChave;
+import com.agrotis.agrotis.Exceptions.ErroUsuarioNaoEncontrado;
 import com.agrotis.agrotis.repositories.LaboratorioRepository;
 import com.agrotis.agrotis.repositories.PropriedadeRepository;
 import com.agrotis.agrotis.repositories.UserRepository;
@@ -42,8 +43,9 @@ public class UserController {
   }
 
   @GetMapping("/users/{id}")
-  public User getById(@PathVariable Long id) {
-    return userRepository.findById(id).get();
+  public User getById(@PathVariable Long id) throws ErroUsuarioNaoEncontrado {
+    return userRepository.findById(id)
+      .orElseThrow(() -> new ErroUsuarioNaoEncontrado());
   }
 
   @PostMapping("/users")
@@ -59,7 +61,7 @@ public class UserController {
       throw new ErroChaveDate();
     }
 
-    lab = laboratorioRepository.findOneByName(u.getLaboratorio());
+    lab = laboratorioRepository.findOneByName(u.getLaboratorio()).get();
     if(lab == null) {
       throw new ErroChaveLaboratorio();
     }

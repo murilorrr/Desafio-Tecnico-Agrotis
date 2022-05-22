@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.agrotis.agrotis.Entities.Laboratorio;
 import com.agrotis.agrotis.Exceptions.ErroChaveLaboratorio;
+import com.agrotis.agrotis.Exceptions.ErroLaboratorioNaoEncontrado;
 import com.agrotis.agrotis.repositories.LaboratorioRepository;
 
 import org.springframework.http.HttpStatus;
@@ -41,8 +42,9 @@ public class LaboratorioController {
   }
 
   @GetMapping("/laboratories/{name}")
-  public Laboratorio getOneByName(@PathVariable String name) {
-    return laboratorioRepository.findOneByName(name);
+  public Laboratorio getOneByName(@PathVariable String name) throws ErroLaboratorioNaoEncontrado {
+    return laboratorioRepository.findOneByName(name)
+      .orElseThrow(() -> new ErroLaboratorioNaoEncontrado());
   }
 
 }
