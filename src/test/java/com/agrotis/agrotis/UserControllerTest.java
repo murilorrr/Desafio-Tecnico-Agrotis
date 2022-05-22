@@ -31,7 +31,7 @@ public class UserControllerTest {
   }
 
   @Test
-  void deve_ser_possive_adicionar_usuarios() throws Exception {
+  void deve_ser_possivel_adicionar_usuarios() throws Exception {
 
     // InputStream getLocalJsonFile = new FileInputStream("src/test/java/com/agrotis/agrotis/user.json");
     // HashMap<String,String> jsonMap = new ObjectMapper().readValue(getLocalJsonFile, HashMap.class);    
