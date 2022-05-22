@@ -2,21 +2,11 @@ package com.agrotis.agrotis.controllers;
 
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
-
-import com.agrotis.agrotis.Entities.Laboratorio;
-import com.agrotis.agrotis.Entities.Propriedade;
 import com.agrotis.agrotis.Entities.User;
 import com.agrotis.agrotis.Entities.UserRequest;
-import com.agrotis.agrotis.Exceptions.ErroChaveDate;
-import com.agrotis.agrotis.Exceptions.ErroChaveLaboratorio;
-import com.agrotis.agrotis.Exceptions.ErroChaveName;
-import com.agrotis.agrotis.Exceptions.ErroChavePropriedade;
 import com.agrotis.agrotis.Exceptions.ErroDeChave;
 import com.agrotis.agrotis.Exceptions.ErroUsuarioNaoEncontrado;
-import com.agrotis.agrotis.repositories.LaboratorioRepository;
-import com.agrotis.agrotis.repositories.PropriedadeRepository;
-import com.agrotis.agrotis.repositories.UserRepository;
+import com.agrotis.agrotis.services.UserService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,90 +24,37 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserController {
 
-  UserRepository userRepository;
-  LaboratorioRepository laboratorioRepository;
-  PropriedadeRepository propriedadeRepository;
+  UserService userService;
   
   @GetMapping("/users")
+  // @ResponseStatus(code = HttpStatus.OK, reason = "OK")
   public Map<String,List<User>> getAll() {
-    List<User> users = userRepository.findAll();
+    List<User> users = userService.findAll();
     return Map.of("users", users);
   }
 
   @GetMapping("/users/{id}")
+  // @ResponseStatus(code = HttpStatus.OK, reason = "OK")
   public User getById(@PathVariable Long id) throws ErroUsuarioNaoEncontrado {
-    return userRepository.findById(id)
-      .orElseThrow(() -> new ErroUsuarioNaoEncontrado());
+    return userService.findById(id);
   }
 
   @PostMapping("/users")
-  public User create(@RequestBody UserRequest u) throws ErroDeChave {
-    Laboratorio lab;
-    Propriedade prop;
-
-    if (u.getName() == null) {
-      throw new ErroChaveName();
-    }
-
-    if ((u.getInitialDate() == null) || (u.getEndDate() == null)) {
-      throw new ErroChaveDate();
-    }
-
-    try {
-      lab = laboratorioRepository.findOneByName(u.getLaboratorio()).get();
-    } catch (NoSuchElementException e) {
-      throw new ErroChaveLaboratorio();
-    }
-
-    try {
-      prop = propriedadeRepository.findOneByName(u.getPropriedade()).get();
-    } catch (NoSuchElementException e) {
-      throw new ErroChavePropriedade();
-    }
-    
-    User user = new User();
-    user.setName(u.getName());
-    user.setInitialDate(u.getInitialDate());
-    user.setEndDate(u.getEndDate());
-    user.setLaboratorio(lab);
-    user.setPropriedade(prop);
-    user.setComments(u.getComments());
-
-    return userRepository.save(user);
+  // @ResponseStatus(code = HttpStatus.CREATED, reason = "CREATED")
+  public User create(@RequestBody UserRequest userRequest) throws ErroDeChave {
+    return userService.create(userRequest);
   }
 
   @PutMapping("/users/{id}")
-  public User updateUser(@PathVariable Long id,@RequestBody UserRequest u) throws ErroDeChave {
-    User user = userRepository.findById(id).get();
-
-    Laboratorio lab;
-    Propriedade prop;
-
-    try {
-      lab = laboratorioRepository.findOneByName(u.getLaboratorio()).get();
-    } catch (NoSuchElementException e) {
-      throw new ErroChaveLaboratorio();
-    }
-
-    try {
-      prop = propriedadeRepository.findOneByName(u.getPropriedade()).get();
-    } catch (NoSuchElementException e) {
-      throw new ErroChavePropriedade();
-    }
-
-    user.setLaboratorio(lab);
-    user.setPropriedade(prop);
-
-    user.setName(u.getName());
-    user.setInitialDate(u.getInitialDate());
-    user.setEndDate(u.getEndDate());
-    user.setComments(u.getComments());
-    return userRepository.save(user);
+  // @ResponseStatus(code = HttpStatus.OK, reason = "Update")
+  public User updateUser(@PathVariable Long id, @RequestBody UserRequest u) throws ErroDeChave, ErroUsuarioNaoEncontrado {
+    return userService.update(u, id);
   }
 
   @DeleteMapping("/users/{id}")
-  public ResponseEntity<String> delete(@PathVariable Long id) {
-    userRepository.deleteById(id);
+  // @ResponseStatus(code = HttpStatus.NO_CONTENT, reason = "Deleted")
+  public ResponseEntity<String> delete(@PathVariable Long id) throws ErroUsuarioNaoEncontrado {
+    userService.delete(id);
     return new ResponseEntity<String>("User has deleted", HttpStatus.OK);
   }
 
