@@ -43,7 +43,7 @@ public class PropriedadesController {
 
   @GetMapping("/ownership/{name}")
   public Propriedade getOneByName(@PathVariable String name) {
-    return propriedadeRepository.findOneByName(name);
+    return propriedadeRepository.findOneByName(name).get();
   }
 
 }
