@@ -1,12 +1,14 @@
 package com.agrotis.agrotis.controllers;
 
+import com.agrotis.agrotis.entities.User;
+import com.agrotis.agrotis.entities.UserRequest;
+import com.agrotis.agrotis.exceptions.ErroDeChave;
+import com.agrotis.agrotis.exceptions.ErroUsuarioNaoEncontrado;
+import com.agrotis.agrotis.services.UserService;
+
 import java.util.List;
 import java.util.Map;
-import com.agrotis.agrotis.Entities.User;
-import com.agrotis.agrotis.Entities.UserRequest;
-import com.agrotis.agrotis.Exceptions.ErroDeChave;
-import com.agrotis.agrotis.Exceptions.ErroUsuarioNaoEncontrado;
-import com.agrotis.agrotis.services.UserService;
+import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
@@ -47,7 +48,8 @@ public class UserController {
 
   @PutMapping("/users/{id}")
   // @ResponseStatus(code = HttpStatus.OK, reason = "Update")
-  public User updateUser(@PathVariable Long id, @RequestBody UserRequest u) throws ErroDeChave, ErroUsuarioNaoEncontrado {
+  public User updateUser(@PathVariable Long id, @RequestBody UserRequest u) throws 
+      ErroDeChave, ErroUsuarioNaoEncontrado {
     return userService.update(u, id);
   }
 

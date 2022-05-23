@@ -1,11 +1,12 @@
 package com.agrotis.agrotis.controllers;
 
-import java.util.List;
-
-import com.agrotis.agrotis.Entities.Propriedade;
-import com.agrotis.agrotis.Exceptions.ErroChavePropriedade;
-import com.agrotis.agrotis.Exceptions.ErroDeChave;
+import com.agrotis.agrotis.entities.Propriedade;
+import com.agrotis.agrotis.exceptions.ErroChavePropriedade;
+import com.agrotis.agrotis.exceptions.ErroDeChave;
 import com.agrotis.agrotis.repositories.PropriedadeRepository;
+
+import java.util.List;
+import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
@@ -23,14 +23,22 @@ public class PropriedadesController {
 
   PropriedadeRepository propriedadeRepository;
 
+  /**
+   * REST POST adicionar Propriedade.
+   * @param propriedade nome da propriedade enviar pelo JSON da requisição
+   * @return
+   */
   @PostMapping("/ownership")
-  public ResponseEntity<Propriedade> create(@RequestBody Propriedade propriedade) throws ErroDeChave {
+  public ResponseEntity<Propriedade> create(@RequestBody Propriedade propriedade) throws
+      ErroDeChave {
     try {
       List<Propriedade> props = propriedadeRepository.findByName(propriedade.getName());
       if (props.size() == 0) {
-        return new ResponseEntity<Propriedade>(propriedadeRepository.save(propriedade), HttpStatus.OK);
+        return new ResponseEntity<Propriedade>(propriedadeRepository.save(
+          propriedade), HttpStatus.OK
+        );
       }
-        return new ResponseEntity<>(HttpStatus.CONFLICT);
+      return new ResponseEntity<>(HttpStatus.CONFLICT);
     } catch (Exception e) {
       throw new ErroChavePropriedade();
     }
