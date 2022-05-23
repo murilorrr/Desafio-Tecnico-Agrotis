@@ -64,6 +64,22 @@ Now it's hands to work! Let's start?
 
 and much more...
 
+## API
+
+| Method | Route | Description | Type of Param | Params |
+|-------| ------ | ---- | ------ | ---- | 
+|GET| /users       |  Retorn all of users in database    |  |  |
+|GET| /users/:id       |  Retorn a user in database with id  |   Param String   |  id  |
+|POST| /users       |   create new user   |   Body    |   name, initialDate, endDate, ?comments, laboratorio, propriedade   |
+|DELETE| /users/:id       |   delete user   |   Param String   |   id   |
+|PUT| /users/:id       |   delete user   |   Param String, Body   |   id, name, initialDate, endDate, ?comments, laboratorio, propriedade   |
+|GET| /laboratories       |  Retorn all of laboratorios in database    |  |  |
+|GET| /laboratories/:name       |  Retorn a laboratio in database with name    |   Param String   |  name  |
+|POST| /laboratories       |   create new laboratorio   |   Body    |  name   |
+|GET| /ownership       |  Retorn all of propriedades in database    |  |  |
+|GET| /ownership/:name       |  Retorn a propriedade in database with name    |   Param String   |  name  |
+|POST| /ownership       |   create new propriedade   |   Body    |  name, cnpj   |
+
 ## 🏃 Getting started
 
 ### Pre-requisites
