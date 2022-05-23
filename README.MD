@@ -14,7 +14,7 @@
 
 <p align="center">A modern resource API</p>
 
-<p align="center"><i> "How to safe a agro economy?" - Thomas Malthus </i> </p>
+<p align="center"><i> "How to save a agro economy?" - Thomas Malthus </i> </p>
 
 <p align="center">
   <a href="#-why">Why</a> •
