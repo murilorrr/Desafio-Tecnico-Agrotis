@@ -1,25 +1,25 @@
 package com.agrotis.agrotis.services;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import com.agrotis.agrotis.Entities.Laboratorio;
-import com.agrotis.agrotis.Entities.Propriedade;
-import com.agrotis.agrotis.Entities.User;
-import com.agrotis.agrotis.Entities.UserRequest;
-import com.agrotis.agrotis.Exceptions.ErroChaveDate;
-import com.agrotis.agrotis.Exceptions.ErroChaveLaboratorio;
-import com.agrotis.agrotis.Exceptions.ErroChaveName;
-import com.agrotis.agrotis.Exceptions.ErroChavePropriedade;
-import com.agrotis.agrotis.Exceptions.ErroDeChave;
-import com.agrotis.agrotis.Exceptions.ErroUsuarioNaoEncontrado;
+import com.agrotis.agrotis.entities.Laboratorio;
+import com.agrotis.agrotis.entities.Propriedade;
+import com.agrotis.agrotis.entities.User;
+import com.agrotis.agrotis.entities.UserRequest;
+import com.agrotis.agrotis.exceptions.ErroChaveDate;
+import com.agrotis.agrotis.exceptions.ErroChaveLaboratorio;
+import com.agrotis.agrotis.exceptions.ErroChaveName;
+import com.agrotis.agrotis.exceptions.ErroChavePropriedade;
+import com.agrotis.agrotis.exceptions.ErroDeChave;
+import com.agrotis.agrotis.exceptions.ErroUsuarioNaoEncontrado;
 import com.agrotis.agrotis.repositories.LaboratorioRepository;
 import com.agrotis.agrotis.repositories.PropriedadeRepository;
 import com.agrotis.agrotis.repositories.UserRepository;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
 
 @Service
 @AllArgsConstructor
@@ -80,16 +80,16 @@ public class UserService implements UserServiceInterface {
 
   @Override
   public void delete(Long id) throws ErroUsuarioNaoEncontrado {
-    try{
+    try {
       userRepository.deleteById(id);
-    }
-    catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       throw new ErroUsuarioNaoEncontrado();
     }
   }
 
   @Override
-  public User update(UserRequest userRequest, Long id) throws ErroDeChave, ErroUsuarioNaoEncontrado {
+  public User update(UserRequest userRequest, Long id) throws
+      ErroDeChave, ErroUsuarioNaoEncontrado {
     User user = findById(id);
 
     Laboratorio lab;
