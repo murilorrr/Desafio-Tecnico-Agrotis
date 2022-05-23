@@ -3,6 +3,7 @@ package com.agrotis.agrotis.controllers;
 import com.agrotis.agrotis.entities.Propriedade;
 import com.agrotis.agrotis.exceptions.ErroChavePropriedade;
 import com.agrotis.agrotis.exceptions.ErroDeChave;
+import com.agrotis.agrotis.exceptions.ErroPropriedadeNaoEncontrada;
 import com.agrotis.agrotis.repositories.PropriedadeRepository;
 
 import java.util.List;
@@ -50,8 +51,9 @@ public class PropriedadesController {
   }
 
   @GetMapping("/ownership/{name}")
-  public Propriedade getOneByName(@PathVariable String name) {
-    return propriedadeRepository.findOneByName(name).get();
+  public Propriedade getOneByName(@PathVariable String name) throws ErroPropriedadeNaoEncontrada {
+    return propriedadeRepository.findOneByName(name).orElseThrow(
+        () -> new ErroPropriedadeNaoEncontrada());
   }
 
 }
