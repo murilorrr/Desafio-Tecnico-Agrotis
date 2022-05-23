@@ -1,20 +1,19 @@
 package com.agrotis.agrotis.seeders;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.agrotis.agrotis.Entities.Laboratorio;
-import com.agrotis.agrotis.Entities.Propriedade;
-import com.agrotis.agrotis.Entities.User;
+import com.agrotis.agrotis.entities.Laboratorio;
+import com.agrotis.agrotis.entities.Propriedade;
+import com.agrotis.agrotis.entities.User;
 import com.agrotis.agrotis.repositories.LaboratorioRepository;
 import com.agrotis.agrotis.repositories.PropriedadeRepository;
 import com.agrotis.agrotis.repositories.UserRepository;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
@@ -26,10 +25,10 @@ public class UserSeeders implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    LoadUserData();
+    loadUserData();
   }
 
-  private void LoadUserData() {
+  private void loadUserData() {
     LocalDate date = LocalDate.now();
 
     List<Laboratorio> labs = laboratorioRepository.findAll();
