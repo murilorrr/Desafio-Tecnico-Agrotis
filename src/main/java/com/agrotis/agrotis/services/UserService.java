@@ -58,13 +58,13 @@ public class UserService implements UserServiceInterface {
     try {
       lab = laboratorioRepository.findOneByName(userRequest.getLaboratorio()).get();
     } catch (NoSuchElementException e) {
-      throw new ErroChaveLaboratorio();
+      throw new ErroChaveLaboratorio(userRequest.getLaboratorio());
     }
 
     try {
       prop = propriedadeRepository.findOneByName(userRequest.getPropriedade()).get();
     } catch (NoSuchElementException e) {
-      throw new ErroChavePropriedade();
+      throw new ErroChavePropriedade(userRequest.getPropriedade());
     }
     
     User user = new User();
@@ -98,13 +98,13 @@ public class UserService implements UserServiceInterface {
     try {
       lab = laboratorioRepository.findOneByName(userRequest.getLaboratorio()).get();
     } catch (NoSuchElementException e) {
-      throw new ErroChaveLaboratorio();
+      throw new ErroChaveLaboratorio(userRequest.getLaboratorio());
     }
 
     try {
       prop = propriedadeRepository.findOneByName(userRequest.getPropriedade()).get();
     } catch (NoSuchElementException e) {
-      throw new ErroChavePropriedade();
+      throw new ErroChavePropriedade(userRequest.getPropriedade());
     }
 
     user.setLaboratorio(lab);

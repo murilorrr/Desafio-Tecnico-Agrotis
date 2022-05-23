@@ -39,7 +39,7 @@ public class LaboratorioController {
       }
       return new ResponseEntity<>(HttpStatus.CONFLICT);
     } catch (Exception e) {
-      throw new ErroChaveLaboratorio();
+      throw new ErroChaveLaboratorio(laboratorio.getName());
     }
   }
 

@@ -40,7 +40,7 @@ public class PropriedadesController {
       }
       return new ResponseEntity<>(HttpStatus.CONFLICT);
     } catch (Exception e) {
-      throw new ErroChavePropriedade();
+      throw new ErroChavePropriedade(propriedade.getName());
     }
   }
 
