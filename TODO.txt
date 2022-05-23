@@ -1,4 +1,5 @@
 Deploy no heroku
+Melhora validações de JSON da requisição com o Spring validation
 autenticação e autorização com JWT
 login para recebimento de chave
 abstração dos controllers
