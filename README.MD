@@ -10,7 +10,8 @@
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/murilorsv14/Desafio-Tecnico-Agrotis">
 </p>
 
-#### Preview Sketch<img src="https://github.com/murilorsv14/Desafio-Tecnico-Agrotis/blob/main/print.png?raw=true" width="auto" title="Image sketch">
+#### Preview Sketch
+<img src="https://github.com/murilorsv14/Desafio-Tecnico-Agrotis/blob/main/print.png?raw=true" width="auto" title="Image sketch">
 
 <p align="center">A modern resource API</p>
 
@@ -25,7 +26,27 @@
 
 ## 😊 **Why?**
 
-<h4>The context:</h4>
+<h4>Description:</h4>
+<p>
+The test consists of building an API to be used in the construction of a screen that is on the <a href="#-Preview Sketch">Preview</a>.
+
+The API must perform the necessary validations to ensure data integrity and
+expose the services needed for listing, searching, inserting, updating and deleting
+data (CRUD).
+
+Check the need for additional services to populate ListViews (Property and Laboratory)
+</p>
+<h4>Requirements:</h4>
+<p>
+Develop with Java, Spring Boot.
+Use some form of data persistence.
+</p>
+
+<h4>Optionals:</h4>
+<p>
+Send the postman collection with the tests performed.
+Unit tests.
+</p>
 
 Now it's hands to work! Let's start?
 
