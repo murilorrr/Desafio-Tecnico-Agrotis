@@ -1,4 +1,4 @@
-package com.agrotis.agrotis.Exceptions;
+package com.agrotis.agrotis.exceptions;
 
 public class ErroLaboratorioNaoEncontrado extends Exception {
   public ErroLaboratorioNaoEncontrado() {

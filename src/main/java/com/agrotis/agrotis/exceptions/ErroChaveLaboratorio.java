@@ -1,6 +1,6 @@
-package com.agrotis.agrotis.Exceptions;
+package com.agrotis.agrotis.exceptions;
 
-public class ErroChaveLaboratorio extends ErroDeChave{
+public class ErroChaveLaboratorio extends ErroDeChave {
 
   public ErroChaveLaboratorio() {
     super("Não existe laboratorio com esse nome");

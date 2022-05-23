@@ -1,4 +1,4 @@
-package com.agrotis.agrotis.Exceptions;
+package com.agrotis.agrotis.exceptions;
 
 public abstract class ErroDeChave extends Exception {
 
