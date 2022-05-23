@@ -94,6 +94,7 @@ http://localhost:8080/users
 ## 👣 Next steps
 
 - [ ] Deploy on heroku
+- [ ] API documentation
 - [ ] Improve security with Spring Security and JWT
 - [ ] Improve JSON validation with Spring Validation
 - [ ] Test for at least 90% of the application
