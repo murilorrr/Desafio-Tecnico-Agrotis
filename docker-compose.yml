@@ -1,8 +1,18 @@
-version: '3.3'
+version: '3.1'
 
 services:
+  # java:
+  #   restart: always
+  #   build: .
+  #   environment:
+  #     SPRING_PROFILES_ACTIVE: dev
+  #   ports:
+  #     - 8080:8080
+  #   depends_on:
+  #     - db
+
   db:
-    image: mysql:5.7
+    build: ./db
     restart: always
     environment:
       # Define o nome do banco de dados
@@ -14,8 +24,8 @@ services:
       - 3306:3306
     volumes:
       # Define um volume interno do Docker para persistir os dados
-      - my-db:/var/lib/mysql
+      - db:/var/lib/mysql
 
 volumes:
   # Cria o volume interno do Docker
-  my-db:
+  db:
