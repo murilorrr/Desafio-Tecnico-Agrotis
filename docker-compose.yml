@@ -12,7 +12,7 @@ services:
   #     - db
 
   db:
-    build: ./db
+    image: mysql
     restart: always
     environment:
       # Define o nome do banco de dados
