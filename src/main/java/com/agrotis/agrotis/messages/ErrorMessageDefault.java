@@ -10,8 +10,9 @@ public class ErrorMessageDefault {
   private int status;
   private String message;
 
-  public ErrorMessageDefault() {
-
+  public ErrorMessageDefault( String message) {
+    this.message = message;
+    instant = Instant.now();
   }
 
   public Instant getInstant() {

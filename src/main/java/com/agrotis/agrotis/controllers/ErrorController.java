@@ -17,13 +17,10 @@ public class ErrorController {
   /**
    * Entidade responsavel por gerenciar os errosNotFound que são lançados na camada de services.
    * @param e Erro NotFound passado pelo service
-   * @return
    */
   @ExceptionHandler(ErroNaoEncontrado.class)
   public ResponseEntity<ErrorMessageDefault> entityNotFound(ErroNaoEncontrado e) {
-    ErrorMessageDefault err = new ErrorMessageDefault();
-    err.setInstant(Instant.now());
-    err.setMessage(e.getMessage());
+    ErrorMessageDefault err = new ErrorMessageDefault(e.getMessage());
     err.setStatus(HttpStatus.NOT_FOUND.value());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
   }
@@ -32,13 +29,10 @@ public class ErrorController {
    * Entidade responsavel por gerenciar os erros de chave que são lançados na camada de
    * services(e as vezes controlers).
    * @param e ErroDeChave passado pelo service
-   * @return
    */
   @ExceptionHandler(ErroDeChave.class)
   public ResponseEntity<ErrorMessageDefault> entityBadRequest(ErroDeChave e) {
-    ErrorMessageDefault err = new ErrorMessageDefault();
-    err.setInstant(Instant.now());
-    err.setMessage(e.getMessage());
+    ErrorMessageDefault err = new ErrorMessageDefault(e.getMessage());
     err.setStatus(HttpStatus.NOT_FOUND.value());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
   }
