@@ -1,4 +1,4 @@
-// package com.agrotis.controllers;
+package com.agrotis.controllers;
 
 // import com.agrotis.agrotis.controllers.LaboratorioController;
 // import com.agrotis.agrotis.repositories.LaboratorioRepository;
@@ -8,7 +8,7 @@
 // import org.springframework.beans.factory.annotation.Autowired;
 
 
-// public class LaboratorioControllerTest {
+public class LaboratorioControllerTest {
   
 //   private LaboratorioController controller;
 
@@ -25,7 +25,7 @@
 //     // return []
 
 
-//   }
+  // }
 
 
-// }
+}
