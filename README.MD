@@ -21,8 +21,8 @@
   <a href="#-why">Why</a> •
   <a href="#-tech-stack">Tech Stack</a> •
   <a href="#-contributing">Contributing</a> •
-  <a href="https://github.com/murilorsv14">About Me</a>
-  <a href="https://agrotis-api-2765.herokuapp.com/">Deployed</a>
+  <a href="https://github.com/murilorsv14">About Me</a> •
+  <a href="https://agrotis-api-2765.herokuapp.com/" target="_blank">Deployed</a>
 </p>
 
 ## 😊 **Why?**
