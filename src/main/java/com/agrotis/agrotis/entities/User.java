@@ -2,18 +2,21 @@ package com.agrotis.agrotis.entities;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "TB_USER")
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
@@ -22,15 +25,16 @@ public class User {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @NotBlank(message = "Name is mandatory")
+  @Column
   private String name;
 
-  // @NotEmpty(message = "initialDate is mandatory")
+  @Column
   private LocalDate initialDate;
 
-  // @NotBlank(message = "endDate is mandatory")
+  @Column
   private LocalDate endDate;
 
+  @Column
   private String comments;
 
   @ManyToOne

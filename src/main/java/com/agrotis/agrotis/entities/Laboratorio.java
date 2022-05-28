@@ -3,16 +3,19 @@ package com.agrotis.agrotis.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "TB_LABORATORIO")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Laboratorio {
@@ -21,6 +24,7 @@ public class Laboratorio {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
+  @Column
   private String name;
 
   @OneToMany(mappedBy = "laboratorio", cascade = CascadeType.ALL, orphanRemoval = true)

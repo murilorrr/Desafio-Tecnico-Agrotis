@@ -4,8 +4,6 @@ import com.agrotis.agrotis.exceptions.ErroDeChave;
 import com.agrotis.agrotis.exceptions.ErroNaoEncontrado;
 import com.agrotis.agrotis.messages.ErrorMessageDefault;
 
-import java.time.Instant;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
