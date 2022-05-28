@@ -22,6 +22,7 @@
   <a href="#-tech-stack">Tech Stack</a> •
   <a href="#-contributing">Contributing</a> •
   <a href="https://github.com/murilorsv14">About Me</a>
+  <a href="https://agrotis-api-2765.herokuapp.com/">Deployed</a>
 </p>
 
 ## 😊 **Why?**
@@ -130,8 +131,8 @@ http://localhost:8080/users
 
 ## 👣 Next steps
 
-- [ ] Deploy on heroku
-- [ ] API documentation
+- [X] Deploy on heroku
+- [X] API documentation
 - [ ] Improve security with Spring Security and JWT
 - [ ] Improve JSON validation with Spring Validation
 - [ ] Test for at least 90% of the application
