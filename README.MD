@@ -101,9 +101,18 @@ $ cd Desafio-Tecnico-Agrotis
 
 If you have docker installed, you can run with:
 
-```sh
-$ docker-compose up
+```sh 
+$ docker-compose up (not funcional yet)
 $ mvn spring-boot:run
+```
+
+or
+
+```sh 
+$ docker build -t mysql-database ./db
+$ docker run -p 3306:3306 mysql-database
+$ docker build -t app-agrotis .
+$ docker run -p 8080:8080 app-agrotis
 ```
 
 Pre-requisites
@@ -144,7 +153,7 @@ This project is for study purposes too, so send me an email telling me what you 
 All kinds of contributions are very welcome and appreciated!
 
 - ⭐️ Star the project
-- 🐛 Find and report issues
+- 🐛 Find and report issuesapp-agrotis
 - 📥 Submit PRs to help solve issues or add features
 - ✋ Influence the future of Desafio-Tecnico-Agrotis with feature requests
 
