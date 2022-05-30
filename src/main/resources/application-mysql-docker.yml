@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://db:3306/agrotis
+    username: root
+    password: root
+    driverClassName: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
