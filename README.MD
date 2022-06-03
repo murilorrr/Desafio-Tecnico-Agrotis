@@ -81,6 +81,33 @@ and much more...
 |GET| /ownership/:name       |  Retorn a propriedade in database with name    |   Param String   |  name  |
 |POST| /ownership       |   create new propriedade   |   Body    |  name, cnpj   |
 
+Exempo de requisição POST para Propriedade: 
+```
+  {
+    "name": "Matrix Agro",
+    "cnpj": "29.541.428/0001-29"
+  }
+```
+
+Exempo de requisição POST para Laboratorio: 
+```
+  {
+    "name": "agrotis122"
+  }
+```
+
+Exempo de requisição POST para Usuários:
+```
+  {
+    "name": "jorge",
+    "initialDate": "2017-01-12",
+    "endDate": "2017-01-14",
+    "comments": "",
+    "laboratorio": "Agro Skynet",
+    "propriedade": "agrotis1"
+  }
+```
+
 ## 🏃 Getting started
 
 ### Pre-requisites
@@ -101,9 +128,18 @@ $ cd Desafio-Tecnico-Agrotis
 
 If you have docker installed, you can run with:
 
-```sh
-$ docker-compose up
+```sh 
+$ docker-compose up (not funcional yet)
 $ mvn spring-boot:run
+```
+
+or
+
+```sh 
+$ docker build -t mysql-database ./db
+$ docker run -p 3306:3306 mysql-database
+$ docker build -t app-agrotis .
+$ docker run -p 8080:8080 app-agrotis
 ```
 
 Pre-requisites
@@ -144,7 +180,7 @@ This project is for study purposes too, so send me an email telling me what you 
 All kinds of contributions are very welcome and appreciated!
 
 - ⭐️ Star the project
-- 🐛 Find and report issues
+- 🐛 Find and report issuesapp-agrotis
 - 📥 Submit PRs to help solve issues or add features
 - ✋ Influence the future of Desafio-Tecnico-Agrotis with feature requests
 
