@@ -10,6 +10,8 @@ public class HelloWorldController {
   @RequestMapping("/")
   @ResponseBody
   String home() {
-    return "Hello World!";
+    return "Bem vindo à API do desafio tecnico da agrotis, "
+      + "os endpoints acessiveis são: /ownership, /users e /laboratories e suas variações {name}"
+      + " ou {id}";
   }
 }
