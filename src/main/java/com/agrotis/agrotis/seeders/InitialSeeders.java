@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class UserSeeders implements CommandLineRunner {
+public class InitialSeeders implements CommandLineRunner {
   
   UserRepository userRepository;
   LaboratorioRepository laboratorioRepository;
@@ -25,6 +25,8 @@ public class UserSeeders implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
+    loadPropriedadeData();
+    loadLaboratorioData();
     loadUserData();
   }
 
@@ -41,6 +43,35 @@ public class UserSeeders implements CommandLineRunner {
     if (userRepository.count() == 0) {
       for (User user : users) {
         userRepository.save(user);
+      }
+    }
+  }
+  
+  private void loadLaboratorioData() {
+    Laboratorio lab1 = new Laboratorio(null, "Agro Skynet", null);
+    Laboratorio lab2 = new Laboratorio(null, "Umbrella Agro", null);
+    Laboratorio lab3 = new Laboratorio(null, "Osborn Agro", null);
+  
+    List<Laboratorio> laboratorios = new ArrayList<Laboratorio>(List.of(lab1, lab2, lab3));
+    
+    if (laboratorioRepository.count() == 0) {
+      for (Laboratorio laboratorio : laboratorios) {
+        laboratorioRepository.save(laboratorio);
+      }
+    }
+  }
+
+  private void loadPropriedadeData() {
+    Propriedade agrotis1 = new Propriedade(null, "agrotis1", "29.541.428/0001-21", null);
+    Propriedade agrotis2 = new Propriedade(null, "agrotis2", "29.541.428/0001-22", null);
+    Propriedade agrotis3 = new Propriedade(null, "agrotis3", "29.541.428/0001-23", null);
+
+    List<Propriedade> propriedades = new ArrayList<Propriedade>(List.of(
+        agrotis1, agrotis2, agrotis3
+    ));
+    if (propriedadeRepository.count() == 0) {
+      for (Propriedade propriedade : propriedades) {
+        propriedadeRepository.save(propriedade);
       }
     }
   }
