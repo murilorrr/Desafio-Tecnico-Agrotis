@@ -10,7 +10,7 @@ public class ErrorMessageDefault {
   private int status;
   private String message;
 
-  public ErrorMessageDefault( String message) {
+  public ErrorMessageDefault(String message) {
     this.message = message;
     instant = Instant.now();
   }
