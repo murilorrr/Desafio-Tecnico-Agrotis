@@ -34,4 +34,16 @@ public class ErrorController {
     err.setStatus(HttpStatus.NOT_FOUND.value());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
   }
+
+  /**
+   * Entidade responsavel por gerenciar os Erros totais que são lançados por algum bug
+   * ainda desconhecido.
+   * @param e Exception passado pelo service
+   */
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<ErrorMessageDefault> bugEntity(Exception e) {
+    ErrorMessageDefault err = new ErrorMessageDefault(e.getMessage());
+    err.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err);
+  }
 }
