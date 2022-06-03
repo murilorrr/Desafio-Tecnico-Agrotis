@@ -81,6 +81,33 @@ and much more...
 |GET| /ownership/:name       |  Retorn a propriedade in database with name    |   Param String   |  name  |
 |POST| /ownership       |   create new propriedade   |   Body    |  name, cnpj   |
 
+Exempo de requisição POST para Propriedade: 
+```
+  {
+    "name": "Matrix Agro",
+    "cnpj": "29.541.428/0001-29"
+  }
+```
+
+Exempo de requisição POST para Laboratorio: 
+```
+  {
+    "name": "agrotis122"
+  }
+```
+
+Exempo de requisição POST para Usuários:
+```
+  {
+    "name": "jorge",
+    "initialDate": "2017-01-12",
+    "endDate": "2017-01-14",
+    "comments": "",
+    "laboratorio": "Agro Skynet",
+    "propriedade": "agrotis1"
+  }
+```
+
 ## 🏃 Getting started
 
 ### Pre-requisites
