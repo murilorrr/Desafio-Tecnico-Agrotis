@@ -2,9 +2,11 @@ package com.agrotis.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 // import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.agrotis.agrotis.controllers.LaboratorioController;
 import com.agrotis.agrotis.entities.Laboratorio;
+import com.agrotis.agrotis.exceptions.ErroChaveLaboratorio;
 import com.agrotis.agrotis.repositories.LaboratorioRepository;
 
 import java.util.ArrayList;
@@ -35,9 +37,11 @@ public class LaboratorioControllerTest {
     LaboratorioController controller = new LaboratorioController(labRepository);
     
     Mockito.when(labRepository.findAll()).thenReturn(new ArrayList<Laboratorio>());
+
+    ResponseEntity<List<Laboratorio>> response = controller.getAll();
     
-    assertEquals(controller.getAll().size(), 0);
-    assertEquals(controller.getAll().getClass(), ArrayList.class);
+    assertEquals(response.getBody().size(), 0);
+    assertEquals(response.getBody().getClass(), ArrayList.class);
   }
 
   @Test
@@ -47,12 +51,14 @@ public class LaboratorioControllerTest {
     
     Mockito.when(labRepository.findAll()).thenReturn(new ArrayList<Laboratorio>(List.of(lab)));
     
-    assertEquals(controller.getAll().size(), 1);
-    assertEquals(controller.getAll().getClass(), ArrayList.class);
+    ResponseEntity<List<Laboratorio>> response = controller.getAll();
+
+    assertEquals(response.getBody().size(), 1);
+    assertEquals(response.getBody().getClass(), ArrayList.class);
   }
 
   @Test
-  public void deveRetornarUmConflictQuandoReceberUmLabQueJaEstejaCadastrado_QuandoChamarFindAll()
+  public void deveRetornarUmConflictQuandoReceberUmLabQueJaEstejaCadastrado_QuandoChamarCreate()
       throws Exception {
     LaboratorioController controller = new LaboratorioController(labRepository);
     Laboratorio lab = new Laboratorio(null, "Agrotis Teste", null);
@@ -63,6 +69,14 @@ public class LaboratorioControllerTest {
     final ResponseEntity<Laboratorio> response = controller.create(lab);
 
     assertEquals(response.getStatusCode(), HttpStatus.CONFLICT);
+  }
+
+  @Test
+  public void deveLancarUmErroAoTentarCadastrarComNomeNull_QuandoChamarCreate() {
+    LaboratorioController controller = new LaboratorioController(labRepository);
+    Laboratorio lab = new Laboratorio(null, null, null);
+
+    assertThrows(ErroChaveLaboratorio.class, () -> controller.create(lab));
   }
 
 }

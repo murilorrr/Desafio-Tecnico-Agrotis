@@ -29,23 +29,24 @@ public class LaboratorioController {
    * @return
    */
   @PostMapping("/laboratories")
-  public ResponseEntity<Laboratorio> create(@RequestBody Laboratorio laboratorio) throws Exception {
-    try {
-      List<Laboratorio> labs = laboratorioRepository.findByName(laboratorio.getName());
-      if (labs.size() == 0) {
-        return new ResponseEntity<Laboratorio>(laboratorioRepository.save(
-          laboratorio), HttpStatus.OK
-        );
-      }
-      return new ResponseEntity<>(HttpStatus.CONFLICT);
-    } catch (Exception e) {
+  public ResponseEntity<Laboratorio> create(@RequestBody Laboratorio laboratorio)
+      throws ErroChaveLaboratorio {
+    if (laboratorio.getName() == null) {
       throw new ErroChaveLaboratorio(laboratorio.getName());
     }
+
+    List<Laboratorio> labs = laboratorioRepository.findByName(laboratorio.getName());
+    if (labs.size() == 0) {
+      return new ResponseEntity<Laboratorio>(laboratorioRepository.save(
+        laboratorio), HttpStatus.OK
+      );
+    }
+    return new ResponseEntity<>(HttpStatus.CONFLICT);
   }
 
   @GetMapping("/laboratories")
-  public List<Laboratorio> getAll() {
-    return laboratorioRepository.findAll();
+  public ResponseEntity<List<Laboratorio>> getAll() {
+    return ResponseEntity.status(HttpStatus.OK).body(laboratorioRepository.findAll());
   }
 
   @GetMapping("/laboratories/{name}")
