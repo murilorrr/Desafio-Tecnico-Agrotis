@@ -7,6 +7,8 @@ import com.agrotis.agrotis.exceptions.ErroPropriedadeNaoEncontrada;
 import com.agrotis.agrotis.repositories.PropriedadeRepository;
 
 import java.util.List;
+import java.util.Optional;
+
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-public class PropriedadesController {
+public class PropriedadeController {
 
   PropriedadeRepository propriedadeRepository;
 
@@ -32,28 +34,37 @@ public class PropriedadesController {
   @PostMapping("/ownership")
   public ResponseEntity<Propriedade> create(@RequestBody Propriedade propriedade) throws
       ErroDeChave {
-    try {
-      List<Propriedade> props = propriedadeRepository.findByName(propriedade.getName());
-      if (props.size() == 0) {
-        return new ResponseEntity<Propriedade>(propriedadeRepository.save(
-          propriedade), HttpStatus.OK
-        );
-      }
-      return new ResponseEntity<>(HttpStatus.CONFLICT);
-    } catch (Exception e) {
-      throw new ErroChavePropriedade(propriedade.getName());
+    if ((propriedade.getCnpj() == null || propriedade.getName() == null)) {
+      throw new ErroChavePropriedade(null);
     }
+
+    List<Propriedade> props = propriedadeRepository.findByName(propriedade.getName());
+    if (props.size() == 0) {
+      return new ResponseEntity<Propriedade>(propriedadeRepository.save(
+        propriedade), HttpStatus.OK
+      );
+    }
+    return new ResponseEntity<>(HttpStatus.CONFLICT);
   }
 
   @GetMapping("/ownership")
-  public List<Propriedade> getAll() {
-    return propriedadeRepository.findAll();
+  public ResponseEntity<List<Propriedade>> getAll() {
+    return ResponseEntity.status(HttpStatus.OK).body(propriedadeRepository.findAll());
   }
 
+  /**
+   * procura por uma propriedade.
+   * @param name nome a ser pesquisado da propriedade.
+   * @return a instancia da propriedade
+   * @throws ErroPropriedadeNaoEncontrada erro chamado ao nao existir a propriedade procurada
+   */
   @GetMapping("/ownership/{name}")
   public Propriedade getOneByName(@PathVariable String name) throws ErroPropriedadeNaoEncontrada {
-    return propriedadeRepository.findOneByName(name).orElseThrow(
-        () -> new ErroPropriedadeNaoEncontrada());
+    Optional<Propriedade> propriedade = propriedadeRepository.findOneByName(name);
+    if (propriedade.isPresent()) {
+      return propriedade.get();
+    }
+    throw new ErroPropriedadeNaoEncontrada();
   }
 
 }
