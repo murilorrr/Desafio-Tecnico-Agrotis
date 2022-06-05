@@ -1,7 +1,7 @@
 package com.agrotis.agrotis.middlewares;
 
 import com.agrotis.agrotis.exceptions.ErroDeChave;
-import com.agrotis.agrotis.exceptions.ErroNaoEncontrado;
+import com.agrotis.agrotis.exceptions.ErroEntidadeNaoEncontrada;
 import com.agrotis.agrotis.messages.ErrorMessageDefault;
 
 import org.springframework.http.HttpStatus;
@@ -17,8 +17,8 @@ public class ErrorMiddleware {
    * Entidade responsavel por gerenciar os errosNotFound que são lançados na camada de services.
    * @param e Erro NotFound passado pelo service
    */
-  @ExceptionHandler(ErroNaoEncontrado.class)
-  public ResponseEntity<ErrorMessageDefault> entityNotFound(ErroNaoEncontrado e) {
+  @ExceptionHandler(ErroEntidadeNaoEncontrada.class)
+  public ResponseEntity<ErrorMessageDefault> entityNotFound(ErroEntidadeNaoEncontrada e) {
     ErrorMessageDefault err = new ErrorMessageDefault(e.getMessage());
     err.setStatus(HttpStatus.NOT_FOUND.value());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
