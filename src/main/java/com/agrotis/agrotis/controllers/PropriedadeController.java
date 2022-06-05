@@ -31,7 +31,7 @@ public class PropriedadeController {
    * @param propriedade nome da propriedade enviar pelo JSON da requisição
    * @return
    */
-  @PostMapping("/ownership")
+  @PostMapping("/ownerships")
   public ResponseEntity<Propriedade> create(@RequestBody Propriedade propriedade) throws
       ErroDeChave {
     if ((propriedade.getCnpj() == null || propriedade.getName() == null)) {
@@ -47,7 +47,7 @@ public class PropriedadeController {
     return new ResponseEntity<>(HttpStatus.CONFLICT);
   }
 
-  @GetMapping("/ownership")
+  @GetMapping("/ownerships")
   public ResponseEntity<List<Propriedade>> getAll() {
     return ResponseEntity.status(HttpStatus.OK).body(propriedadeRepository.findAll());
   }
@@ -58,7 +58,7 @@ public class PropriedadeController {
    * @return a instancia da propriedade
    * @throws ErroPropriedadeNaoEncontrada erro chamado ao nao existir a propriedade procurada
    */
-  @GetMapping("/ownership/{name}")
+  @GetMapping("/ownerships/{name}")
   public Propriedade getOneByName(@PathVariable String name) throws ErroPropriedadeNaoEncontrada {
     Optional<Propriedade> propriedade = propriedadeRepository.findOneByName(name);
     if (propriedade.isPresent()) {
