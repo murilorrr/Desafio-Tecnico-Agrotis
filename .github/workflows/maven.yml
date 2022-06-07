@@ -24,3 +24,7 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Install dependences
+      run: mvn install
+    - name: Test Checking
+      run: mvn test
