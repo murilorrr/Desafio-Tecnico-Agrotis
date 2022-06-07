@@ -169,6 +169,7 @@ http://localhost:8080/users
 
 - [X] Deploy on heroku
 - [X] API documentation
+- [X] Create CI & CD for this repo
 - [ ] Improve security with Spring Security and JWT
 - [ ] Improve JSON validation with Spring Validation
 - [ ] Test for at least 90% of the application
