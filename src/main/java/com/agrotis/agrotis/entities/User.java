@@ -42,7 +42,7 @@ public class User {
 
   @ManyToOne
   @JoinColumn(name = "propriedade_id")
-  private Propriedade propriedade;
+  private Property property;
 
   public Long getId() {
     return id;
@@ -92,12 +92,12 @@ public class User {
     this.laboratory = laboratory;
   }
 
-  public Propriedade getPropriedade() {
-    return propriedade;
+  public Property getProperty() {
+    return property;
   }
 
-  public void setPropriedade(Propriedade propriedade) {
-    this.propriedade = propriedade;
+  public void setProperty(Property property) {
+    this.property = property;
   }
 
 }

@@ -1,7 +1,7 @@
 package com.agrotis.agrotis.exceptions;
 
-public class ErroChaveDate extends ErroDeChave {
-  public ErroChaveDate() {
+public class KeyErrorDate extends KeyError {
+  public KeyErrorDate() {
     super("Datas precisam ser preenchidas");
   }
 }

@@ -14,7 +14,7 @@ public class UserRequest {
 
   private String laboratory;
 
-  private String propriedade;
+  private String property;
 
   public String getName() {
     return name;
@@ -56,12 +56,12 @@ public class UserRequest {
     this.laboratory = laboratory;
   }
 
-  public String getPropriedade() {
-    return propriedade;
+  public String getProperty() {
+    return property;
   }
 
-  public void setPropriedade(String propriedade) {
-    this.propriedade = propriedade;
+  public void setProperty(String property) {
+    this.property = property;
   }
 
 }

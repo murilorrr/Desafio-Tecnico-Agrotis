@@ -1,6 +1,6 @@
 package com.agrotis.agrotis.exceptions;
 
-public class ErrorLaboratoryNotFound extends ErroEntidadeNaoEncontrada {
+public class ErrorLaboratoryNotFound extends ErrorEntityNotFound {
   public ErrorLaboratoryNotFound() {
     super("Laboratório nao encontrado");
   }

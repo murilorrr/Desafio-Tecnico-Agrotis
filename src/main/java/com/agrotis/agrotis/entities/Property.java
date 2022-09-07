@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "TB_PROPRIEDADE")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Propriedade {
+public class Property {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,7 +30,7 @@ public class Propriedade {
   @Column
   private String cnpj;
 
-  @OneToMany(mappedBy = "propriedade", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<User> users;
 
   public Long getId() {

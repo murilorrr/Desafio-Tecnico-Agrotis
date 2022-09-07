@@ -1,7 +1,7 @@
 package com.agrotis.agrotis.middlewares;
 
-import com.agrotis.agrotis.exceptions.ErroDeChave;
-import com.agrotis.agrotis.exceptions.ErroEntidadeNaoEncontrada;
+import com.agrotis.agrotis.exceptions.KeyError;
+import com.agrotis.agrotis.exceptions.ErrorEntityNotFound;
 import com.agrotis.agrotis.messages.ErrorMessageDefault;
 
 import org.springframework.http.HttpStatus;
@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ErrorMiddleware {
 
-  @ExceptionHandler(ErroEntidadeNaoEncontrada.class)
-  public ResponseEntity<ErrorMessageDefault> entityNotFound(ErroEntidadeNaoEncontrada e) {
+  @ExceptionHandler(ErrorEntityNotFound.class)
+  public ResponseEntity<ErrorMessageDefault> entityNotFound(ErrorEntityNotFound e) {
     ErrorMessageDefault err = new ErrorMessageDefault(e.getMessage());
     err.setStatus(HttpStatus.NOT_FOUND.value());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
   }
 
-  @ExceptionHandler(ErroDeChave.class)
-  public ResponseEntity<ErrorMessageDefault> entityBadRequest(ErroDeChave e) {
+  @ExceptionHandler(KeyError.class)
+  public ResponseEntity<ErrorMessageDefault> entityBadRequest(KeyError e) {
     ErrorMessageDefault err = new ErrorMessageDefault(e.getMessage());
     err.setStatus(HttpStatus.NOT_FOUND.value());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);

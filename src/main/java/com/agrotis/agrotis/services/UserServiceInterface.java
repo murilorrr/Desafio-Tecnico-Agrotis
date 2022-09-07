@@ -2,19 +2,19 @@ package com.agrotis.agrotis.services;
 
 import com.agrotis.agrotis.entities.User;
 import com.agrotis.agrotis.entities.UserRequest;
-import com.agrotis.agrotis.exceptions.ErroDeChave;
-import com.agrotis.agrotis.exceptions.ErroUsuarioNaoEncontrado;
+import com.agrotis.agrotis.exceptions.KeyError;
+import com.agrotis.agrotis.exceptions.ErrorUserNotFound;
 
 import java.util.List;
 
 public interface UserServiceInterface {
-  public List<User> findAll();
+  List<User> findAll();
   
-  public User findById(Long id) throws ErroUsuarioNaoEncontrado;
+  User findById(Long id) throws ErrorUserNotFound;
 
-  public User create(UserRequest userRequest) throws ErroDeChave;
+  User create(UserRequest userRequest) throws KeyError;
 
-  public void delete(Long id) throws ErroUsuarioNaoEncontrado;
+  void delete(Long id) throws ErrorUserNotFound;
 
-  public User update(UserRequest userRequest, Long id) throws ErroDeChave, ErroUsuarioNaoEncontrado;
+  User update(UserRequest userRequest, Long id) throws KeyError, ErrorUserNotFound;
 }

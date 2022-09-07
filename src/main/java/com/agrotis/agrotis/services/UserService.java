@@ -1,114 +1,105 @@
 package com.agrotis.agrotis.services;
 
 import com.agrotis.agrotis.entities.Laboratory;
-import com.agrotis.agrotis.entities.Propriedade;
+import com.agrotis.agrotis.entities.Property;
 import com.agrotis.agrotis.entities.User;
 import com.agrotis.agrotis.entities.UserRequest;
-import com.agrotis.agrotis.exceptions.ErroChaveDate;
-import com.agrotis.agrotis.exceptions.KeyErrorLaboratory;
-import com.agrotis.agrotis.exceptions.ErroChaveName;
-import com.agrotis.agrotis.exceptions.ErroChavePropriedade;
-import com.agrotis.agrotis.exceptions.ErroDeChave;
-import com.agrotis.agrotis.exceptions.ErroUsuarioNaoEncontrado;
+import com.agrotis.agrotis.exceptions.KeyErrorDate;
+import com.agrotis.agrotis.exceptions.KeyErrorName;
+import com.agrotis.agrotis.exceptions.KeyError;
+import com.agrotis.agrotis.exceptions.ErrorUserNotFound;
 import com.agrotis.agrotis.repositories.LaboratoryRepository;
-import com.agrotis.agrotis.repositories.PropriedadeRepository;
+import com.agrotis.agrotis.repositories.PropertyRepository;
 import com.agrotis.agrotis.repositories.UserRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
-@AllArgsConstructor
 public class UserService implements UserServiceInterface {
 
-  UserRepository userRepository;
-  LaboratoryRepository laboratoryRepository;
-  PropriedadeRepository propriedadeRepository;
+  private final UserRepository userRepository;
+  private final LaboratoryRepository laboratoryRepository;
+  private final PropertyRepository propertyRepository;
+
+  @Autowired
+  public UserService(UserRepository userRepository, LaboratoryRepository laboratoryRepository, PropertyRepository propertyRepository) {
+    this.userRepository = userRepository;
+    this.laboratoryRepository = laboratoryRepository;
+    this.propertyRepository = propertyRepository;
+  }
 
   @Override
   public List<User> findAll() {
-    List<User> users = userRepository.findAll();
-    return users;
+    return userRepository.findAll();
   }
   
   @Override
-  public User findById(Long id) throws ErroUsuarioNaoEncontrado {
+  public User findById(Long id) throws ErrorUserNotFound {
     return userRepository.findById(id)
-      .orElseThrow(ErroUsuarioNaoEncontrado::new);
+      .orElseThrow(ErrorUserNotFound::new);
   }
 
   @Override
-  public User create(UserRequest userRequest) throws ErroDeChave {
+  public User create(UserRequest userRequest) throws KeyError {
 
-    Laboratory lab;
-    Propriedade prop;
+    Laboratory lab = null;
+    Property prop = null;
 
     if (userRequest.getName() == null) {
-      throw new ErroChaveName();
+      throw new KeyErrorName();
     }
 
     if ((userRequest.getInitialDate() == null) || (userRequest.getEndDate() == null)) {
-      throw new ErroChaveDate();
+      throw new KeyErrorDate();
     }
 
-    try {
+    if (laboratoryRepository.findOneByName(userRequest.getLaboratory()).isPresent())
       lab = laboratoryRepository.findOneByName(userRequest.getLaboratory()).get();
-    } catch (NoSuchElementException e) {
-      throw new KeyErrorLaboratory(userRequest.getLaboratory());
-    }
 
-    try {
-      prop = propriedadeRepository.findOneByName(userRequest.getPropriedade()).get();
-    } catch (NoSuchElementException e) {
-      throw new ErroChavePropriedade(userRequest.getPropriedade());
-    }
+
+    if (propertyRepository.findOneByName(userRequest.getProperty()).isPresent())
+      prop = propertyRepository.findOneByName(userRequest.getProperty()).get();
+
     
     User user = new User();
     user.setName(userRequest.getName());
     user.setInitialDate(userRequest.getInitialDate());
     user.setEndDate(userRequest.getEndDate());
     user.setLaboratory(lab);
-    user.setPropriedade(prop);
+    user.setProperty(prop);
     user.setComments(userRequest.getComments());
 
     return userRepository.save(user);
   }
 
   @Override
-  public void delete(Long id) throws ErroUsuarioNaoEncontrado {
+  public void delete(Long id) throws ErrorUserNotFound {
     try {
       userRepository.deleteById(id);
     } catch (IllegalArgumentException e) {
-      throw new ErroUsuarioNaoEncontrado();
+      throw new ErrorUserNotFound();
     }
   }
 
   @Override
-  public User update(UserRequest userRequest, Long id) throws
-      ErroDeChave, ErroUsuarioNaoEncontrado {
+  public User update(UserRequest userRequest, Long id) throws ErrorUserNotFound {
     User user = findById(id);
 
-    Laboratory lab;
-    Propriedade prop;
+    Laboratory lab = null;
+    Property prop = null;
 
-    try {
+    if (laboratoryRepository.findOneByName(userRequest.getLaboratory()).isPresent())
       lab = laboratoryRepository.findOneByName(userRequest.getLaboratory()).get();
-    } catch (NoSuchElementException e) {
-      throw new KeyErrorLaboratory(userRequest.getLaboratory());
-    }
 
-    try {
-      prop = propriedadeRepository.findOneByName(userRequest.getPropriedade()).get();
-    } catch (NoSuchElementException e) {
-      throw new ErroChavePropriedade(userRequest.getPropriedade());
-    }
+    if (propertyRepository.findOneByName(userRequest.getProperty()).isPresent())
+      prop = propertyRepository.findOneByName(userRequest.getProperty()).get();
 
     user.setLaboratory(lab);
-    user.setPropriedade(prop);
+    user.setProperty(prop);
 
     user.setName(userRequest.getName());
     user.setInitialDate(userRequest.getInitialDate());

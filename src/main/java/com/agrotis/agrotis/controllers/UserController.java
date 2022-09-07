@@ -2,8 +2,8 @@ package com.agrotis.agrotis.controllers;
 
 import com.agrotis.agrotis.entities.User;
 import com.agrotis.agrotis.entities.UserRequest;
-import com.agrotis.agrotis.exceptions.ErroDeChave;
-import com.agrotis.agrotis.exceptions.ErroUsuarioNaoEncontrado;
+import com.agrotis.agrotis.exceptions.KeyError;
+import com.agrotis.agrotis.exceptions.ErrorUserNotFound;
 import com.agrotis.agrotis.services.UserService;
 
 import java.util.List;
@@ -28,36 +28,30 @@ public class UserController {
   UserService userService;
   
   @GetMapping("/users")
-  // @ResponseStatus(code = HttpStatus.OK, reason = "OK")
   public Map<String,List<User>> getAll() {
     List<User> users = userService.findAll();
     return Map.of("users", users);
   }
 
   @GetMapping("/users/{id}")
-  // @ResponseStatus(code = HttpStatus.OK, reason = "OK")
-  public User getById(@PathVariable Long id) throws ErroUsuarioNaoEncontrado {
+  public User getById(@PathVariable Long id) throws ErrorUserNotFound {
     return userService.findById(id);
   }
 
   @PostMapping("/users")
-  // @ResponseStatus(code = HttpStatus.CREATED, reason = "CREATED")
-  public User create(@RequestBody UserRequest userRequest) throws ErroDeChave {
+  public User create(@RequestBody UserRequest userRequest) throws KeyError {
     return userService.create(userRequest);
   }
 
   @PutMapping("/users/{id}")
-  // @ResponseStatus(code = HttpStatus.OK, reason = "Update")
-  public User updateUser(@PathVariable Long id, @RequestBody UserRequest u) throws 
-      ErroDeChave, ErroUsuarioNaoEncontrado {
+  public User updateUser(@PathVariable Long id, @RequestBody UserRequest u) throws ErrorUserNotFound {
     return userService.update(u, id);
   }
 
   @DeleteMapping("/users/{id}")
-  // @ResponseStatus(code = HttpStatus.NO_CONTENT, reason = "Deleted")
-  public ResponseEntity<String> delete(@PathVariable Long id) throws ErroUsuarioNaoEncontrado {
+  public ResponseEntity<String> delete(@PathVariable Long id) throws ErrorUserNotFound {
     userService.delete(id);
-    return new ResponseEntity<String>("User has deleted", HttpStatus.OK);
+    return new ResponseEntity<>("User has deleted", HttpStatus.OK);
   }
 
 }
