@@ -13,7 +13,7 @@
 	<name>Desafio-tecnico</name>
 	<description>Desafio técnico proposto pela empresa agrotis</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>16</java.version>
 	</properties>
 
 	<dependencies>
