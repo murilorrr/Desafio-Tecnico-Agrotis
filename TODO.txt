@@ -4,3 +4,4 @@ autenticação e autorização com JWT
 login para recebimento de chave
 abstração dos controllers
 TESTES TESTES!! !important
+INGLES!

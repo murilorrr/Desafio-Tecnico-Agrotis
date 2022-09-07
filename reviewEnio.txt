@@ -1,0 +1,79 @@
+Visão geral
+	- melhorar gitignore (a pasta bin está para ser commitada)
+ 		- sugestão de um gitignore para Java: https://gist.github.com/dedunumax/54e82214715e35439227
+
+	- evite instanciar objetos passando valores nulos nos atributos
+ 		- Ex.: Classe InitialSeeders métodos loadUserData(), loadLaboratorioData(), loadPropriedadeData()
+
+ 		- Para isso, crie construtores que recebam somente os atributos necessários e faça uma sobrecarga de construtor.
+ 			- Outra opção é criar um builder para construir o objeto. Essa opção envolve cenários em que está criando muitos construtores para o mesmo objeto ou o objeto possui muitos atributos.
+
+ 		- Se não deseja criar múltiplos construtores ou um builder, utilize o construtor default e chame métodos set para definir o valor dos atributos. Mesmo quando utilizar métodos set não é necessário passar valor nulo para esse método ao instanciar um novo objeto, dado que se o atributo não possui valor por default é NULL.
+
+	- precisei criar os construtores, pois instanciou objetos sem a existência de um construtor específico
+
+	 - defina um padrão e siga, evite misturar português e inglês
+
+	- sobre os testes, como estavam apenas relacionados a consultas no banco testes unitários não fazem sentido dado que precisa mockar o retorno dessas consultas. Então é necessário realizar testes de integração. Testes unitários estão relacionados a implementações com regras definidas.
+
+	- acredito que algumas annotations do lombok não funcionaram corretamente enquanto eu subia a aplicação. Então seria interessante rever também esses pontos.
+
+	- Para uma visão inicial do sistema eu acredito que alguns ajustes apontados aqui te ajudariam a evoluir consideravelmente seu projeto.
+
+	- Caso queira trocar ideias e conversar mais sobre essas questões e outras ideias fique a vontade para me procurar.
+
+	- Como adeno deixo aqui alguns termos que fazem parte do dia a dia de sistemas mais robustos e que é interessante pelo menos ter noção pensando em crescimento de carreira. Alguns acredito que você já conheça, outros não tenho certeza:
+		* Clean Code
+		* SOLID
+		* Clean Architecture
+		* Command Query Responsibility Segregation (CQRS)
+		* TDD, BDD, DDD
+		* Change Data Capture (CDC)
+		* REST
+		* RPC
+		* API
+		* SQL, NoSQL
+		* KAFKA, SQS, RabbitMQ
+		* Docker, Kubernetes
+		* CI/CD
+		* AWS, GCP, Azure
+		* SaaS, FaaS, IaaS, CaaS, PaaS
+
+***************************************************************************************
+
+Análise mais aprofundada:
+	- pacote controller
+		- LaboratorioController
+			- método create
+				- além de NULL, se o nome do laboratório não puder ser vazio sugiro utilizar o método StringUtils.isBlank(nome) da apache.commons.lang3 para fazer essa validação
+					- sugiro que a exceção a ser lançada seja mais específica para esse cenário e a mensagem deixe explícito esse contexto.
+
+		 		- esse método além de acessar o banco diretamente possui regras para definir se o objeto deve ser salvo ou não.
+					- agora que tens uma visão mais de arquitetura, pensando em inversão de dependência e um melhor controle das camadas (controller, tratamento de dados e persistência), sugiro a criação de interfaces em uma camada e o controller apenas fazer a chamada por interfaces. Isolar a implementação dessa interface em uma camada de negócio e ter interfaces para acessar a camada de persistência.
+
+		 			- referências para estudo Clean Code, Clean Architecture e Arquitetura Hexagonal para auxiliá-lo na evolução desse sistema, caso seja do seu interesse.
+
+		 	- alguns comentários do método acima são refletidos nos demais métodos desse controller.
+
+		- Sobre os demais controller considerar os apontamentos feitos no LaboratorioController
+			- Apenas um adeno, remova linhas comentadas do código, se não é algum tipo de documentação é informação desnecessária.
+
+	- pacote entities
+		- não misturar classes de Request/Response com classes ORM que fazem o mapeamento de banco de dados. Classes de Request/Response precisam estar juntamente com os controllers e serem trabalhados em uma camada intermediária antes de chegar na persistência.
+
+	- pacote repositories
+		- sugiro separar métodos de consulta e persistência. Se pensar em escalar o sistema, realizar consultas em um banco de leitura e persistir (insert/update) em um banco de escrita ajuda a diminuir a latência concorrência de processos acessando o banco de dados.
+			- A sugestão aqui é apenas preparar um cenário que permita trabalhar com bancos com permissões diferentes. Porque sabemos que é necessário trabalhar a replicação dos dados entre o banco de escrita e leitura. Além disso, dependendo da periodicidade em que se ocorre a cópia é necessário deixar claro para o usuário que pode-se ter um delay ao consultar a informação.
+
+			- Uma solução muito utilizada para replicação de dados é Change Data Capture (CDC). Este processo, captura apenas as alterações adicionadas na base de dados entre uma versão e outra e pode transferir em tempo real essas mudanças para um outro destino.
+
+			- Motivos para pensar em separar futuramente em um banco de leitura e escrita:
+				- Por exemplo, se a persistência de um objeto estiver demorando mais que o necessário e o banco está lockado, uma consulta não poderá ser realizada.
+
+				- Se o pool de conexões está sendo totalmente utilizado novas solicitações ficam na fila.
+
+				- Se uma consulta mal feita travar o banco não será possível inserir nem atualizar informações.
+
+				- Muitas das hipóteses acima estão considerando que o sistema possui apenas uma instância de banco de dados sem replicação.
+
+				- Então considerar esses fatores enquanto desenha a arquitetura da sua solução é essencial no desenvolvimento de um sistema escalável.
