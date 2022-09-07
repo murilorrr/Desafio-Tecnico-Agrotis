@@ -20,20 +20,20 @@ import org.springframework.stereotype.Component;
 public class InitialSeeders implements CommandLineRunner {
   
   UserRepository userRepository;
-  LaboratoryRepository laboratorioRepository;
+  LaboratoryRepository laboratoryRepository;
   PropriedadeRepository propriedadeRepository;
 
   @Override
   public void run(String... args) throws Exception {
     loadPropriedadeData();
-    loadLaboratorioData();
+    loadLaboratoryData();
     loadUserData();
   }
 
   private void loadUserData() {
     LocalDate date = LocalDate.now();
 
-    List<Laboratory> labs = laboratorioRepository.findAll();
+    List<Laboratory> labs = laboratoryRepository.findAll();
     List<Propriedade> props = propriedadeRepository.findAll();
 
     User maria = new User(null, "Maria", date, date, "comments1", labs.get(0), props.get(2));
@@ -41,23 +41,19 @@ public class InitialSeeders implements CommandLineRunner {
     User joao = new User(null, "Joao", date, date, "comments3", labs.get(2), props.get(0));
     List<User> users = new ArrayList<User>(List.of(maria, joao, jorge));
     if (userRepository.count() == 0) {
-      for (User user : users) {
-        userRepository.save(user);
-      }
+      userRepository.saveAll(users);
     }
   }
   
-  private void loadLaboratorioData() {
+  private void loadLaboratoryData() {
     Laboratory lab1 = new Laboratory(null, "Agro Skynet", null);
     Laboratory lab2 = new Laboratory(null, "Umbrella Agro", null);
     Laboratory lab3 = new Laboratory(null, "Osborn Agro", null);
   
-    List<Laboratory> laboratorios = new ArrayList<Laboratory>(List.of(lab1, lab2, lab3));
+    List<Laboratory> laboratories = new ArrayList<Laboratory>(List.of(lab1, lab2, lab3));
     
-    if (laboratorioRepository.count() == 0) {
-      for (Laboratory laboratorio : laboratorios) {
-        laboratorioRepository.save(laboratorio);
-      }
+    if (laboratoryRepository.count() == 0) {
+      laboratoryRepository.saveAll(laboratories);
     }
   }
 
@@ -70,9 +66,7 @@ public class InitialSeeders implements CommandLineRunner {
         agrotis1, agrotis2, agrotis3
     ));
     if (propriedadeRepository.count() == 0) {
-      for (Propriedade propriedade : propriedades) {
-        propriedadeRepository.save(propriedade);
-      }
+      propriedadeRepository.saveAll(propriedades);
     }
   }
 }

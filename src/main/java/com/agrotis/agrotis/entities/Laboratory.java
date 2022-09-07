@@ -27,7 +27,7 @@ public class Laboratory {
   @Column
   private String name;
 
-  @OneToMany(mappedBy = "laboratorio", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "laboratory", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<User> users;
 
   public Long getId() {

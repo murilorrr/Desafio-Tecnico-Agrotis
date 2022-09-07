@@ -12,7 +12,7 @@ public class UserRequest {
 
   private String comments;
 
-  private String laboratorio;
+  private String laboratory;
 
   private String propriedade;
 
@@ -48,12 +48,12 @@ public class UserRequest {
     this.comments = comments;
   }
 
-  public String getLaboratorio() {
-    return laboratorio;
+  public String getLaboratory() {
+    return laboratory;
   }
 
-  public void setLaboratorio(String laboratorio) {
-    this.laboratorio = laboratorio;
+  public void setLaboratory(String laboratory) {
+    this.laboratory = laboratory;
   }
 
   public String getPropriedade() {

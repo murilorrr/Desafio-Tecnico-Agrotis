@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 public class UserService implements UserServiceInterface {
 
   UserRepository userRepository;
-  LaboratoryRepository laboratorioRepository;
+  LaboratoryRepository laboratoryRepository;
   PropriedadeRepository propriedadeRepository;
 
   @Override
@@ -38,7 +38,7 @@ public class UserService implements UserServiceInterface {
   @Override
   public User findById(Long id) throws ErroUsuarioNaoEncontrado {
     return userRepository.findById(id)
-      .orElseThrow(() -> new ErroUsuarioNaoEncontrado());
+      .orElseThrow(ErroUsuarioNaoEncontrado::new);
   }
 
   @Override
@@ -56,9 +56,9 @@ public class UserService implements UserServiceInterface {
     }
 
     try {
-      lab = laboratorioRepository.findOneByName(userRequest.getLaboratorio()).get();
+      lab = laboratoryRepository.findOneByName(userRequest.getLaboratory()).get();
     } catch (NoSuchElementException e) {
-      throw new KeyErrorLaboratory(userRequest.getLaboratorio());
+      throw new KeyErrorLaboratory(userRequest.getLaboratory());
     }
 
     try {
@@ -71,7 +71,7 @@ public class UserService implements UserServiceInterface {
     user.setName(userRequest.getName());
     user.setInitialDate(userRequest.getInitialDate());
     user.setEndDate(userRequest.getEndDate());
-    user.setLaboratorio(lab);
+    user.setLaboratory(lab);
     user.setPropriedade(prop);
     user.setComments(userRequest.getComments());
 
@@ -96,9 +96,9 @@ public class UserService implements UserServiceInterface {
     Propriedade prop;
 
     try {
-      lab = laboratorioRepository.findOneByName(userRequest.getLaboratorio()).get();
+      lab = laboratoryRepository.findOneByName(userRequest.getLaboratory()).get();
     } catch (NoSuchElementException e) {
-      throw new KeyErrorLaboratory(userRequest.getLaboratorio());
+      throw new KeyErrorLaboratory(userRequest.getLaboratory());
     }
 
     try {
@@ -107,7 +107,7 @@ public class UserService implements UserServiceInterface {
       throw new ErroChavePropriedade(userRequest.getPropriedade());
     }
 
-    user.setLaboratorio(lab);
+    user.setLaboratory(lab);
     user.setPropriedade(prop);
 
     user.setName(userRequest.getName());

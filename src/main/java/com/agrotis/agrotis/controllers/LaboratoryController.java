@@ -2,7 +2,7 @@ package com.agrotis.agrotis.controllers;
 
 import com.agrotis.agrotis.entities.Laboratory;
 import com.agrotis.agrotis.exceptions.KeyErrorLaboratory;
-import com.agrotis.agrotis.exceptions.ErroLaboratorioNaoEncontrado;
+import com.agrotis.agrotis.exceptions.ErrorLaboratoryNotFound;
 import com.agrotis.agrotis.repositories.LaboratoryRepository;
 
 import java.util.List;
@@ -45,9 +45,9 @@ public class LaboratoryController {
   }
 
   @GetMapping("/laboratories/{name}")
-  public Laboratory getOneByName(@PathVariable String name) throws ErroLaboratorioNaoEncontrado {
+  public Laboratory getOneByName(@PathVariable String name) throws ErrorLaboratoryNotFound {
     return laboratoryRepository.findOneByName(name)
-      .orElseThrow(ErroLaboratorioNaoEncontrado::new);
+      .orElseThrow(ErrorLaboratoryNotFound::new);
   }
 
 }
