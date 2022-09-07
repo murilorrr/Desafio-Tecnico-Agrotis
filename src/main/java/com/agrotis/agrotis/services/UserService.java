@@ -1,16 +1,16 @@
 package com.agrotis.agrotis.services;
 
-import com.agrotis.agrotis.entities.Laboratorio;
+import com.agrotis.agrotis.entities.Laboratory;
 import com.agrotis.agrotis.entities.Propriedade;
 import com.agrotis.agrotis.entities.User;
 import com.agrotis.agrotis.entities.UserRequest;
 import com.agrotis.agrotis.exceptions.ErroChaveDate;
-import com.agrotis.agrotis.exceptions.ErroChaveLaboratorio;
+import com.agrotis.agrotis.exceptions.KeyErrorLaboratory;
 import com.agrotis.agrotis.exceptions.ErroChaveName;
 import com.agrotis.agrotis.exceptions.ErroChavePropriedade;
 import com.agrotis.agrotis.exceptions.ErroDeChave;
 import com.agrotis.agrotis.exceptions.ErroUsuarioNaoEncontrado;
-import com.agrotis.agrotis.repositories.LaboratorioRepository;
+import com.agrotis.agrotis.repositories.LaboratoryRepository;
 import com.agrotis.agrotis.repositories.PropriedadeRepository;
 import com.agrotis.agrotis.repositories.UserRepository;
 
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 public class UserService implements UserServiceInterface {
 
   UserRepository userRepository;
-  LaboratorioRepository laboratorioRepository;
+  LaboratoryRepository laboratorioRepository;
   PropriedadeRepository propriedadeRepository;
 
   @Override
@@ -44,7 +44,7 @@ public class UserService implements UserServiceInterface {
   @Override
   public User create(UserRequest userRequest) throws ErroDeChave {
 
-    Laboratorio lab;
+    Laboratory lab;
     Propriedade prop;
 
     if (userRequest.getName() == null) {
@@ -58,7 +58,7 @@ public class UserService implements UserServiceInterface {
     try {
       lab = laboratorioRepository.findOneByName(userRequest.getLaboratorio()).get();
     } catch (NoSuchElementException e) {
-      throw new ErroChaveLaboratorio(userRequest.getLaboratorio());
+      throw new KeyErrorLaboratory(userRequest.getLaboratorio());
     }
 
     try {
@@ -92,13 +92,13 @@ public class UserService implements UserServiceInterface {
       ErroDeChave, ErroUsuarioNaoEncontrado {
     User user = findById(id);
 
-    Laboratorio lab;
+    Laboratory lab;
     Propriedade prop;
 
     try {
       lab = laboratorioRepository.findOneByName(userRequest.getLaboratorio()).get();
     } catch (NoSuchElementException e) {
-      throw new ErroChaveLaboratorio(userRequest.getLaboratorio());
+      throw new KeyErrorLaboratory(userRequest.getLaboratorio());
     }
 
     try {

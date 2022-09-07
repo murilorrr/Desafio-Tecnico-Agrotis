@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "TB_LABORATORIO")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Laboratorio {
+public class Laboratory {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

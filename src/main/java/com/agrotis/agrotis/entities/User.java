@@ -38,7 +38,7 @@ public class User {
 
   @ManyToOne
   @JoinColumn(name = "laboratorio_id")
-  private Laboratorio laboratorio;
+  private Laboratory laboratorio;
 
   @ManyToOne
   @JoinColumn(name = "propriedade_id")
@@ -84,11 +84,11 @@ public class User {
     this.comments = comments;
   }
 
-  public Laboratorio getLaboratorio() {
+  public Laboratory getLaboratorio() {
     return laboratorio;
   }
 
-  public void setLaboratorio(Laboratorio laboratorio) {
+  public void setLaboratorio(Laboratory laboratorio) {
     this.laboratorio = laboratorio;
   }
 

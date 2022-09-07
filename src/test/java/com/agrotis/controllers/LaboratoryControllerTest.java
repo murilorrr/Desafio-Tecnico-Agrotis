@@ -1,13 +1,12 @@
 package com.agrotis.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-// import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.agrotis.agrotis.controllers.LaboratorioController;
-import com.agrotis.agrotis.entities.Laboratorio;
-import com.agrotis.agrotis.exceptions.ErroChaveLaboratorio;
-import com.agrotis.agrotis.repositories.LaboratorioRepository;
+import com.agrotis.agrotis.controllers.LaboratoryController;
+import com.agrotis.agrotis.entities.Laboratory;
+import com.agrotis.agrotis.exceptions.KeyErrorLaboratory;
+import com.agrotis.agrotis.repositories.LaboratoryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,21 +23,21 @@ import org.springframework.http.ResponseEntity;
 @SpringBootTest
 @AutoConfigureMockMvc
 @DisplayName("Teste de unidade para o controller de laboratorios")
-public class LaboratorioControllerTest {
+public class LaboratoryControllerTest {
   
   @MockBean
-  private LaboratorioController controller;
+  private LaboratoryController controller;
 
   @MockBean
-  private LaboratorioRepository labRepository;
+  private LaboratoryRepository labRepository;
 
   @Test
   public void deveConterUmaListaDeLaboratorios_QuandoChamarFindAll() {
-    LaboratorioController controller = new LaboratorioController(labRepository);
+    LaboratoryController controller = new LaboratoryController(labRepository);
     
-    Mockito.when(labRepository.findAll()).thenReturn(new ArrayList<Laboratorio>());
+    Mockito.when(labRepository.findAll()).thenReturn(new ArrayList<Laboratory>());
 
-    ResponseEntity<List<Laboratorio>> response = controller.getAll();
+    ResponseEntity<List<Laboratory>> response = controller.getAll();
     
     assertEquals(response.getBody().size(), 0);
     assertEquals(response.getBody().getClass(), ArrayList.class);
@@ -46,12 +45,12 @@ public class LaboratorioControllerTest {
 
   @Test
   public void deveConterUmaListaDeLaboratoriosComPeloMenosUmQuandoHouver_QuandoChamarFindAll() {
-    LaboratorioController controller = new LaboratorioController(labRepository);
-    Laboratorio lab = new Laboratorio(null, "Agrotis Teste", null);
+    LaboratoryController controller = new LaboratoryController(labRepository);
+    Laboratory lab = new Laboratory(null, "Agrotis Teste", null);
     
-    Mockito.when(labRepository.findAll()).thenReturn(new ArrayList<Laboratorio>(List.of(lab)));
+    Mockito.when(labRepository.findAll()).thenReturn(new ArrayList<Laboratory>(List.of(lab)));
     
-    ResponseEntity<List<Laboratorio>> response = controller.getAll();
+    ResponseEntity<List<Laboratory>> response = controller.getAll();
 
     assertEquals(response.getBody().size(), 1);
     assertEquals(response.getBody().getClass(), ArrayList.class);
@@ -60,23 +59,23 @@ public class LaboratorioControllerTest {
   @Test
   public void deveRetornarUmConflictQuandoReceberUmLabQueJaEstejaCadastrado_QuandoChamarCreate()
       throws Exception {
-    LaboratorioController controller = new LaboratorioController(labRepository);
-    Laboratorio lab = new Laboratorio(null, "Agrotis Teste", null);
+    LaboratoryController controller = new LaboratoryController(labRepository);
+    Laboratory lab = new Laboratory(null, "Agrotis Teste", null);
     
     Mockito.when(labRepository.findByName("Agrotis Teste"))
-      .thenReturn(new ArrayList<Laboratorio>(List.of(lab)));
+      .thenReturn(new ArrayList<Laboratory>(List.of(lab)));
     
-    final ResponseEntity<Laboratorio> response = controller.create(lab);
+    final ResponseEntity<Laboratory> response = controller.create(lab);
 
     assertEquals(response.getStatusCode(), HttpStatus.CONFLICT);
   }
 
   @Test
   public void deveLancarUmErroAoTentarCadastrarComNomeNull_QuandoChamarCreate() {
-    LaboratorioController controller = new LaboratorioController(labRepository);
-    Laboratorio lab = new Laboratorio(null, null, null);
+    LaboratoryController controller = new LaboratoryController(labRepository);
+    Laboratory lab = new Laboratory(null, null, null);
 
-    assertThrows(ErroChaveLaboratorio.class, () -> controller.create(lab));
+    assertThrows(KeyErrorLaboratory.class, () -> controller.create(lab));
   }
 
 }

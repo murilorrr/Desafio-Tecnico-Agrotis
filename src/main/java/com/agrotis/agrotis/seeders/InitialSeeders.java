@@ -1,9 +1,9 @@
 package com.agrotis.agrotis.seeders;
 
-import com.agrotis.agrotis.entities.Laboratorio;
+import com.agrotis.agrotis.entities.Laboratory;
 import com.agrotis.agrotis.entities.Propriedade;
 import com.agrotis.agrotis.entities.User;
-import com.agrotis.agrotis.repositories.LaboratorioRepository;
+import com.agrotis.agrotis.repositories.LaboratoryRepository;
 import com.agrotis.agrotis.repositories.PropriedadeRepository;
 import com.agrotis.agrotis.repositories.UserRepository;
 
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 public class InitialSeeders implements CommandLineRunner {
   
   UserRepository userRepository;
-  LaboratorioRepository laboratorioRepository;
+  LaboratoryRepository laboratorioRepository;
   PropriedadeRepository propriedadeRepository;
 
   @Override
@@ -33,7 +33,7 @@ public class InitialSeeders implements CommandLineRunner {
   private void loadUserData() {
     LocalDate date = LocalDate.now();
 
-    List<Laboratorio> labs = laboratorioRepository.findAll();
+    List<Laboratory> labs = laboratorioRepository.findAll();
     List<Propriedade> props = propriedadeRepository.findAll();
 
     User maria = new User(null, "Maria", date, date, "comments1", labs.get(0), props.get(2));
@@ -48,14 +48,14 @@ public class InitialSeeders implements CommandLineRunner {
   }
   
   private void loadLaboratorioData() {
-    Laboratorio lab1 = new Laboratorio(null, "Agro Skynet", null);
-    Laboratorio lab2 = new Laboratorio(null, "Umbrella Agro", null);
-    Laboratorio lab3 = new Laboratorio(null, "Osborn Agro", null);
+    Laboratory lab1 = new Laboratory(null, "Agro Skynet", null);
+    Laboratory lab2 = new Laboratory(null, "Umbrella Agro", null);
+    Laboratory lab3 = new Laboratory(null, "Osborn Agro", null);
   
-    List<Laboratorio> laboratorios = new ArrayList<Laboratorio>(List.of(lab1, lab2, lab3));
+    List<Laboratory> laboratorios = new ArrayList<Laboratory>(List.of(lab1, lab2, lab3));
     
     if (laboratorioRepository.count() == 0) {
-      for (Laboratorio laboratorio : laboratorios) {
+      for (Laboratory laboratorio : laboratorios) {
         laboratorioRepository.save(laboratorio);
       }
     }
