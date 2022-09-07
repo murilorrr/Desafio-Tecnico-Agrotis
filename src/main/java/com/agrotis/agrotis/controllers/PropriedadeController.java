@@ -26,11 +26,6 @@ public class PropriedadeController {
 
   PropriedadeRepository propriedadeRepository;
 
-  /**
-   * REST POST adicionar Propriedade.
-   * @param propriedade nome da propriedade enviar pelo JSON da requisição
-   * @return
-   */
   @PostMapping("/ownerships")
   public ResponseEntity<Propriedade> create(@RequestBody Propriedade propriedade) throws
       ErroDeChave {
@@ -40,8 +35,8 @@ public class PropriedadeController {
 
     List<Propriedade> props = propriedadeRepository.findByName(propriedade.getName());
     if (props.size() == 0) {
-      return new ResponseEntity<Propriedade>(propriedadeRepository.save(
-        propriedade), HttpStatus.OK
+      return new ResponseEntity<>(propriedadeRepository.save(
+              propriedade), HttpStatus.OK
       );
     }
     return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -52,12 +47,6 @@ public class PropriedadeController {
     return ResponseEntity.status(HttpStatus.OK).body(propriedadeRepository.findAll());
   }
 
-  /**
-   * procura por uma propriedade.
-   * @param name nome a ser pesquisado da propriedade.
-   * @return a instancia da propriedade
-   * @throws ErroPropriedadeNaoEncontrada erro chamado ao nao existir a propriedade procurada
-   */
   @GetMapping("/ownerships/{name}")
   public Propriedade getOneByName(@PathVariable String name) throws ErroPropriedadeNaoEncontrada {
     Optional<Propriedade> propriedade = propriedadeRepository.findOneByName(name);

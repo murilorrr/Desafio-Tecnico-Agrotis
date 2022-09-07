@@ -23,11 +23,6 @@ public class LaboratorioController {
 
   LaboratorioRepository laboratorioRepository;
 
-  /**
-   * REST POST adicionar Laboratorio.
-   * @param laboratorio nome do laboratorio enviado pelo JSON da requisição.
-   * @return
-   */
   @PostMapping("/laboratories")
   public ResponseEntity<Laboratorio> create(@RequestBody Laboratorio laboratorio)
       throws ErroChaveLaboratorio {
@@ -37,7 +32,7 @@ public class LaboratorioController {
 
     List<Laboratorio> labs = laboratorioRepository.findByName(laboratorio.getName());
     if (labs.size() == 0) {
-      return new ResponseEntity<Laboratorio>(laboratorioRepository.save(
+      return new ResponseEntity<>(laboratorioRepository.save(
         laboratorio), HttpStatus.OK
       );
     }
@@ -52,7 +47,7 @@ public class LaboratorioController {
   @GetMapping("/laboratories/{name}")
   public Laboratorio getOneByName(@PathVariable String name) throws ErroLaboratorioNaoEncontrado {
     return laboratorioRepository.findOneByName(name)
-      .orElseThrow(() -> new ErroLaboratorioNaoEncontrado());
+      .orElseThrow(ErroLaboratorioNaoEncontrado::new);
   }
 
 }

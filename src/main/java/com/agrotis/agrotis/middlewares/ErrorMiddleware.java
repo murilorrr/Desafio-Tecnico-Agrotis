@@ -12,11 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class ErrorMiddleware {
-  
-  /**
-   * Entidade responsavel por gerenciar os errosNotFound que são lançados na camada de services.
-   * @param e Erro NotFound passado pelo service
-   */
+
   @ExceptionHandler(ErroEntidadeNaoEncontrada.class)
   public ResponseEntity<ErrorMessageDefault> entityNotFound(ErroEntidadeNaoEncontrada e) {
     ErrorMessageDefault err = new ErrorMessageDefault(e.getMessage());
@@ -24,11 +20,6 @@ public class ErrorMiddleware {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
   }
 
-  /**
-   * Entidade responsavel por gerenciar os erros de chave que são lançados na camada de
-   * services(e as vezes controlers).
-   * @param e ErroDeChave passado pelo service
-   */
   @ExceptionHandler(ErroDeChave.class)
   public ResponseEntity<ErrorMessageDefault> entityBadRequest(ErroDeChave e) {
     ErrorMessageDefault err = new ErrorMessageDefault(e.getMessage());
@@ -36,10 +27,6 @@ public class ErrorMiddleware {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
   }
 
-  /**
-   * Entidade responsavel por gerenciar os Erros de Requests body.
-   * @param e Exception passado pelo service
-   */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<ErrorMessageDefault> bugEntity(HttpMessageNotReadableException e) {
     ErrorMessageDefault err = new ErrorMessageDefault(e.getMessage());
@@ -47,11 +34,6 @@ public class ErrorMiddleware {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
   }
 
-  /**
-   * Entidade responsavel por gerenciar os Erros totais que são lançados por algum bug
-   * ainda desconhecido.
-   * @param e Exception passado pelo service
-   */
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ErrorMessageDefault> bugEntity(Exception e) {
     ErrorMessageDefault err = new ErrorMessageDefault(e.getMessage());
