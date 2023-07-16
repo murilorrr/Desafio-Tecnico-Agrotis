@@ -22,7 +22,6 @@
   <a href="#-tech-stack">Tech Stack</a> •
   <a href="#-contributing">Contributing</a> •
   <a href="https://github.com/murilorsv14">About Me</a> •
-  <a href="https://agrotis-api-2765.herokuapp.com/">Deployed in heroku</a>
 </p>
 
 ## 😊 **Why?**
